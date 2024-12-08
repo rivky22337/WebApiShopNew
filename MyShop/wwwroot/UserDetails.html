@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script defer src="UserDetails.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="Home.css" />
+    <title>user details</title>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">!!!</h1>
+        <button onclick="ShowDetails()">Update your details</button>
+        <div id="details" style="visibility:hidden">
+            <label>userName</label>
+            <input id="updateUserNameInput" type="email" />
+            <label>password</label>
+            <input id="updatePasswordInput" type="password" onchange="checkPassword()" />
+            <meter id="meter"></meter>
+            <label>firstName</label>
+            <input id="updateFirstNameInput" />
+            <label>lastName</label>
+            <input id="updateLastNameInput" />
+            <button onclick="UpdateUser()">update</button>
+        </div>
+        </div>
+</body>
+</html>

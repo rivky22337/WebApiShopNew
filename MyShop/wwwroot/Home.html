@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>home</title>
+    <script defer src="Home.js"></script>
+    <link rel="stylesheet" href="Home.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <label>userName</label>
+        <input id="loginUserNameInput" type="email" />
+        <label>password</label>
+        <input id="loginPasswordInput" type="password" />
+        <button onclick="Login()">login</button>
+        <br />
+        <button onclick="register()">Press here to register</button>
+        <div id="container" style="visibility:hidden">
+            <h1>Register</h1>
+            <label>userName</label>
+            <input id="registerUserNameInput" type="email" />
+            <label>password</label>
+            <input id="registerPasswordInput" type="password" onblur="checkPassword()"/>
+            <meter id="a"></meter>
+            <label>firstName</label>
+            <input id="registerFirstNameInput" />
+            <label>lastName</label>
+            <input id="registerLastNameInput" />
+            <button onclick="CreateNewUser()">register</button>
+        </div>
+    </div>
+</body>
+</html>
+
+
