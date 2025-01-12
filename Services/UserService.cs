@@ -2,6 +2,7 @@
 using Entities.Models;
 using System.Text.Json;
 using Zxcvbn;
+using DTO;
 
 namespace Services
 {
@@ -30,9 +31,9 @@ namespace Services
             return await _userRepository.AddUserAsync(user);
         }
 
-        public User Login(string userName, string password)
+        public User Login(LoginUserDTO loginUserDTO)
         {
-            return _userRepository.Login(userName, password);
+            return _userRepository.Login(loginUserDTO);
         }
 
         public async Task<User> UpdateUser(int id, User userToUpdate)
@@ -44,6 +45,7 @@ namespace Services
             }
             return await _userRepository.UpdateUserAsync(id, userToUpdate);
         }
+
         public int CheckPassword(string password)
         {
             if (password == null || password == "")

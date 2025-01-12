@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using DTO;
+using Entities.Models;
 
 namespace Services
 {
@@ -7,7 +8,7 @@ namespace Services
         Task<User> AddUser(User user);
         int CheckPassword(string password);
         //User GetUserById(int id);
-        User Login(string userName, string password);
+        User Login(LoginUserDTO loginUserDTO);
         Task<User> UpdateUser(int id, User userToUpdate);
     }
 }

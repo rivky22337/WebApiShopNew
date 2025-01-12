@@ -1,6 +1,6 @@
 ﻿const title = document.querySelector("#title")
 const meter = document.querySelector("#meter")
-const user = JSON.parse(sessionStorage.getItem('currentUser'))
+const user = JSON.parse(localStorage.getItem('currentUser'))
 title.textContent = `hello ${user.userName}`
 
 const GetDataFromForm = () => {

@@ -1,4 +1,5 @@
 ﻿//using Entities;
+using DTO;
 using Entities.Models;
 
 namespace Repositories
@@ -7,7 +8,7 @@ namespace Repositories
     {
         Task<User> AddUserAsync(User user);
         //User GetUserById(int id);
-        User Login(string userName, string password);
+        User Login(LoginUserDTO loginUserDTO);
         Task<User> UpdateUserAsync(int id, User userToUpdate);
     }
 }

@@ -48,17 +48,18 @@ const GetDataFromLogin = () => {
 const Login = async () => {
     const details = GetDataFromLogin();
     try {
-        const ResponsePost = await fetch(`api/User/Login/?userName=${details.userName}&password=${details.password}`, {
+        const ResponsePost = await fetch(`api/User/Login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify(details)
         });
         const dataPost = await ResponsePost.json();
         if (dataPost.status == 400)
             alert("wrong details, please try again!")
         else {
-            sessionStorage.setItem("currentUser", JSON.stringify(dataPost))
+            localStorage.setItem("currentUser", JSON.stringify(dataPost))
             window.location.href = "UserDetails.html";
         }
     }

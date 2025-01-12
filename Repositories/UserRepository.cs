@@ -1,4 +1,5 @@
 ﻿//using Entities;
+using DTO;
 using Entities.Models;
 using System.Runtime.InteropServices;
 using System.Text.Json;
@@ -30,15 +31,16 @@ namespace Repositories
 
         public async Task<User> AddUserAsync(User user)
         {
+
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
         }
 
-        public User Login(string userName, string password)
+        public User Login(LoginUserDTO loginUserDTO)
         {
 
-            User user = _context.Users.FirstOrDefault(u =>  u.UserName == userName && u.Password == password );
+            User user = _context.Users.FirstOrDefault(u =>  u.UserName == loginUserDTO.UserName && u.Password == loginUserDTO.Password );
            if(user == null) 
                 return null;
             return user;
