@@ -14,10 +14,12 @@ namespace MyShop.Controllers
     {
         IProductService _productService;
         IMapper _mapper;
-        public ProductController(IProductService productService, IMapper mapper)
+        ILogger<ProductController> _logger;
+        public ProductController(IProductService productService, IMapper mapper,ILogger<ProductController> logger)
         {
             _productService = productService;
             _mapper=mapper;
+            _logger = logger;
         }
         // GET: api/<ProductController>
         [HttpGet]
@@ -27,9 +29,14 @@ namespace MyShop.Controllers
             IEnumerable<ListProductDTO> productDTOs = _mapper.Map<IEnumerable<Product>, IEnumerable<ListProductDTO>>(products);
             if (productDTOs != null)
             {
+                _logger.LogInformation("Order controller:get");
                 return Ok(productDTOs);
             }
-            return BadRequest();
+            else
+            {
+                _logger.LogError("Order controller:get Error");
+                return BadRequest();
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Repositories
 
         public async Task AddRatingAsync(Rating rating)
         {
-            await _shopContext.ratings.AddAsync(rating);
+            await _shopContext.Ratings.AddAsync(rating);
             await _shopContext.SaveChangesAsync();
         }
     }

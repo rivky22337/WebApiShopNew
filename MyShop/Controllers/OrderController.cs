@@ -15,10 +15,12 @@ namespace MyShop.Controllers
 
         IOrderService _orderService;
         IMapper _mapper;
-        public OrderController(IOrderService orderService, IMapper mapper)
+        ILogger<OrderController> _logger;
+        public OrderController(IOrderService orderService, IMapper mapper,ILogger<OrderController> logger)
         {
             _mapper = mapper;
             _orderService = orderService;
+            _logger = logger;
         }
         // GET api/<OrderController>/5
         [HttpGet("{id}")]
@@ -28,6 +30,7 @@ namespace MyShop.Controllers
 
             if (orderDTO != null)
             {
+                _logger.LogInformation("OrderController:get");
                 return Ok(orderDTO);
             }
             else
@@ -44,10 +47,14 @@ namespace MyShop.Controllers
 
             if (returnOrder != null)
             {
+                _logger.LogInformation($"OrderController:new order {o.OrderId} created  ");
                 return CreatedAtAction(nameof(Get), new { id = returnOrder.OrderId }, returnOrder);
             }
             else
+            {
+                _logger.LogError("OrderController: post: error");
                 return BadRequest();
+            }
         }
 
     }

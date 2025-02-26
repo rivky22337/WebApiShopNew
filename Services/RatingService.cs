@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Entities.Models;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Services
 
         public async Task AddRatingAsync(Rating rating)
         {
-            return await _rating.AddRatingAsync(rating);
+             await _rating.AddRatingAsync(rating);
         }
     }
 }

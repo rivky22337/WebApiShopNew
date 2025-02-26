@@ -30,8 +30,10 @@ namespace MyShop.Controllers
             IEnumerable<CategoryDTO> categoryDTOs = _mapper.Map<IEnumerable<Category>,IEnumerable<CategoryDTO>>(categories);
             if (categoryDTOs != null)
             {
+                _logger.LogInformation("Category controller: get");
                 return Ok(categoryDTOs);
             }
+            _logger.LogError("Error: Category controller: get");
             return BadRequest();
         }
     }

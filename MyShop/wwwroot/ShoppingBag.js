@@ -7,11 +7,16 @@ const totalAmount = document.querySelector("#totalAmount")
 
 document.addEventListener('DOMContentLoaded', () => {
     itemCount.textContent = items.length
-    totalAmount.textContent = items.reduce((sum,item)=>sum+item.price,0)
-    items.forEach(item => {
-        addItem(item)
+    if (items.length > 0) {
+        totalAmount.textContent = items.reduce((sum, item) => sum + item.price, 0)
+        items.forEach(item => {
+            addItem(item)
+        })
+    }
+    else {
+        totalAmount.textContent = 0;
+    }
 })
-});
 const printItems = () => {
     itemsList.innerHTML = ""
     items.forEach(item => {
@@ -41,7 +46,7 @@ const placeOrder = async () => {
     try {
         const body = {
             orderItems : items.map(i => ({ productId: i.productId })),
-            orderDate: "2025-01-05",
+            orderDate: new Date().toISOString().slice(0, 10),
             userId: user.userId,
             orderSum:Number(totalAmount.textContent)
         }
@@ -57,6 +62,8 @@ const placeOrder = async () => {
         }
         if (ResponsePost.ok) {
             alert("Created successfully");
+            localStorage.setItem(`${user.userId}_CartItems`, JSON.stringify([]) )
+            window.location.reload()
         } else {
             alert("Bad request");
         }

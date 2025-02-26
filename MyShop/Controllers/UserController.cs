@@ -57,9 +57,14 @@ namespace MyShop.Controllers
 
             if (usersDTO != null ) 
             {
+                _logger.LogInformation($"UserController: created user {user.UserName}");
                 return CreatedAtAction(nameof(Get), new { id = user.UserId }, usersDTO);
             }
-            return BadRequest();
+            else
+            {
+                _logger.LogError("userController: error creating user");
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -102,27 +107,16 @@ namespace MyShop.Controllers
 
             if (usersDTO != null)
             {
+                _logger.LogInformation($"userController: updating user {u.UserName}");
                 return Ok(usersDTO);
             }
-            return BadRequest();
+            else
+            {
+                _logger.LogError($"userController: error updating user {u.UserName} ");
+                return BadRequest();
+            }
         }
 
-        //// PUT api/<UserController>/5
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateUser(int id, [FromBody] User userToUpdate)
-        //{
-        //    User result = await _userService.UpdateUser(id, userToUpdate);
-        //    if (result != null)
-        //    {
-        //        return Ok(result);
-        //    }
-        //    return BadRequest();
-        //}
 
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

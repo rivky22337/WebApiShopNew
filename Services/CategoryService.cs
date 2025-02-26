@@ -11,6 +11,7 @@ namespace Services
     public class CategoryService : ICategoryService
     {
         ICategoryRepository _categoryRepository;
+        //ILogger<CategoryService> _logger;
 
         public CategoryService(ICategoryRepository categoryRepository)
         {

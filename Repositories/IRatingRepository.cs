@@ -2,7 +2,7 @@
 
 namespace Repositories
 {
-    internal interface IRatingRepository
+    public interface IRatingRepository
     {
         Task AddRatingAsync(Rating rating);
     }
