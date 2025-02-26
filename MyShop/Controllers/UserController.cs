@@ -20,12 +20,13 @@ namespace MyShop.Controllers
     {
         IUserService _userService;
         IMapper _mapper;
+        private ILogger<UserController> _logger;
 
-        public UserController(IUserService userService,IMapper mapper)
+        public UserController(IUserService userService,IMapper mapper, ILogger<UserController> logger)
         {
             _userService = userService;
             _mapper = mapper;
-
+            _logger = logger;
         }
         // GET: api/<UserController>
         [HttpGet]
@@ -82,8 +83,10 @@ namespace MyShop.Controllers
             ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(user);
             if (usersDTO != null)
             {
+                _logger.LogInformation($"Login attemped with user {0} and password {1}", loginUser.UserName,loginUser.Password);
                 return Ok(usersDTO);
             }
+            _logger.LogInformation($"Login failed with user {0} and password {1}", loginUser.UserName, loginUser.Password);
             return BadRequest();
         }
 

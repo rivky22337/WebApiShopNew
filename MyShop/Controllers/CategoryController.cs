@@ -16,10 +16,12 @@ namespace MyShop.Controllers
     {
         ICategoryService _categoryService;
         IMapper _mapper;
-        public CategoryController(ICategoryService categoryService, IMapper mapper)
+        private ILogger<CategoryController> _logger;
+        public CategoryController(ICategoryService categoryService, IMapper mapper, ILogger<CategoryController> logger)
         {
             _mapper = mapper;
             _categoryService = categoryService;
+            _logger = logger;
         }
         //GET: api/<ProductController>
         [HttpGet]
