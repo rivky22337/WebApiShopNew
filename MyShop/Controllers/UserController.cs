@@ -54,7 +54,6 @@ namespace MyShop.Controllers
             //int passwordScore = _userService.CheckPassword(user.Password);
             User newUser = await _userService.AddUser(user);
             ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(newUser);
-
             if (usersDTO != null ) 
             {
                 _logger.LogInformation($"UserController: created user {user.UserName}");

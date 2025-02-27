@@ -28,13 +28,12 @@ const addProduct = (name, price, description, image) => {
     const clone = templateCard.content.cloneNode(true); 
 
     const imgElement = clone.querySelector('img');
-    imgElement.src = image;
+    imgElement.src = `/pictures/${image}.jpg`;
     imgElement.alt = name;
 
     clone.querySelector('h1').textContent = name;
-    clone.querySelector('.price').textContent = `¤${price}`;
+    clone.querySelector('.price').textContent = `$${price}`;
     clone.querySelector('.description').textContent = description;
-
     productList.appendChild(clone);
 };
 const addCategory = (name,count) => {
@@ -114,7 +113,8 @@ const changeCategory = async(checkbox) => {
 const PrintProducts = () => {
     productList.innerHTML=""
     products.forEach(product => {
-        addProduct(product.productName, product.price, "aaa", product.image);
+        console.log(product)
+        addProduct(product.productName, product.price, product.description, product.imageUrl);
     });
 }
 const LoadProductsList = async (url) => {

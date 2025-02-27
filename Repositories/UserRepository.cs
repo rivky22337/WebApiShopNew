@@ -1,6 +1,7 @@
 ﻿//using Entities;
 using DTO;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 namespace Repositories
@@ -31,7 +32,11 @@ namespace Repositories
 
         public async Task<User> AddUserAsync(User user)
         {
-
+            User duplicate = await _context.Users.FirstOrDefaultAsync(u => u.UserName == user.UserName);
+            if (duplicate==null)
+            {
+                return null;
+            }
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;

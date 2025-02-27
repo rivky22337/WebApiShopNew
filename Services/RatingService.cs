@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    internal class RatingService
+    public class RatingService : IRatingService
     {
         MyShopContext _shopContext;
         IRatingRepository _rating;
@@ -21,7 +21,7 @@ namespace Services
 
         public async Task AddRatingAsync(Rating rating)
         {
-             await _rating.AddRatingAsync(rating);
+            await _rating.AddRatingAsync(rating);
         }
     }
 }

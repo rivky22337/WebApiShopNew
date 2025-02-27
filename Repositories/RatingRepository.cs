@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    internal class RatingRepository : IRatingRepository
+    public class RatingRepository : IRatingRepository
     {
         MyShopContext _shopContext;
         public RatingRepository(MyShopContext shopContext)

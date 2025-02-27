@@ -28,6 +28,8 @@ const addItem = (item) => {
     clone.querySelector('.itemName').textContent = item.productName;
     clone.querySelector('.price').textContent = `₪${item.price}`;
     clone.querySelector('.itemNumber').textContent = item.productId;
+    const imageDiv = clone.querySelector('.image');
+    imageDiv.style.backgroundImage = `url('/pictures/${item.imageUrl}.jpg')`;
     itemsList.appendChild(clone);
 }
 const removeItem = (item) =>{

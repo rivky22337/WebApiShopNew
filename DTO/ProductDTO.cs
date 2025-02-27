@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace DTO
 {
    public record SingleProductDTO(int ProductId, string ProductName, int Price,int CategoryId, string Description);
-   public record ListProductDTO(int ProductId, string ProductName, int Price,string Category);
+   public record ListProductDTO(int ProductId, string ProductName, int Price,string Category,string Description,string ImageUrl);
 }
