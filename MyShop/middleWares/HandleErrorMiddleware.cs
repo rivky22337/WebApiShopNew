@@ -24,7 +24,7 @@ namespace MyShop.middleWares
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while processing the request.");
+                _logger.LogError( $"An error occurred while processing the request.\n{ex}");
                 httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await httpContext.Response.WriteAsync("An unexpected error .....");
             }

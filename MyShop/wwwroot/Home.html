@@ -7,28 +7,28 @@
     <link rel="stylesheet" href="Home.css" />
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="loginContainer">
         <h1>Login</h1>
-        <label>userName</label>
-        <input id="loginUserNameInput" type="email" />
-        <label>password</label>
-        <input id="loginPasswordInput" type="password" />
-        <button onclick="Login()">login</button>
-        <br />
-        <button onclick="register()">Press here to register</button>
-        <div id="container" style="visibility:hidden">
-            <h1>Register</h1>
-            <label>userName</label>
-            <input id="registerUserNameInput" type="email" />
-            <label>password</label>
-            <input id="registerPasswordInput" type="password" onblur="checkPassword()"/>
-            <meter id="a"></meter>
-            <label>firstName</label>
-            <input id="registerFirstNameInput" />
-            <label>lastName</label>
-            <input id="registerLastNameInput" />
-            <button onclick="CreateNewUser()">register</button>
-        </div>
+        <label>Username</label>
+        <input id="loginUserNameInput" type="email" placeholder="Enter your email" />
+        <label>Password</label>
+        <input id="loginPasswordInput" type="password" placeholder="Enter your password" />
+        <button onclick="login()">Login</button>
+        <button onclick="register()">Register</button>
+    </div>
+
+    <div class="container" id="registerContainer">
+        <h1>Register</h1>
+        <label>Username</label>
+        <input id="registerUserNameInput" type="email" placeholder="Enter your email" />
+        <label>Password</label>
+        <input id="registerPasswordInput" type="password" placeholder="Choose a strong password" onblur="checkPassword()" />
+        <meter id="a"></meter>
+        <label>First Name</label>
+        <input id="registerFirstNameInput" placeholder="Enter your first name" />
+        <label>Last Name</label>
+        <input id="registerLastNameInput" placeholder="Enter your last name" />
+        <button onclick="createNewUser()">Register</button>
     </div>
 </body>
 </html>

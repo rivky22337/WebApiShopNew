@@ -2,6 +2,7 @@
 const meter = document.querySelector("#meter")
 const user = JSON.parse(localStorage.getItem('currentUser'))
 title.textContent = `hello ${user.userName}`
+let flag = false;
 
 const GetDataFromForm = () => {
     const userName = document.querySelector("#updateUserNameInput").value
@@ -17,26 +18,35 @@ const ShowDetails = () => {
     container.style.visibility = "visible";
 }
 const UpdateUser = async () => {
-    const UpdatedUser = GetDataFromForm();
-    try {
-        const ResponsePut = await fetch(`api/User/${user.userId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(UpdatedUser)
-        });
-        if (ResponsePut.status == 400) {
-            alert("One or more details is wrong");
-        }
-        if (ResponsePut.ok) {
-            alert("Updated successfully");
-        } else {
-            alert("Bad request");
-        }
+    if (!flag) {
+        alert("Enter password again")
     }
-    catch (Error) {
-        console.log(Error)
+    else {
+        const UpdatedUser = GetDataFromForm();
+        try {
+            const ResponsePut = await fetch(`api/User/${user.userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(UpdatedUser)
+            });
+            if (ResponsePut.ok) {
+                alert("Updated successfully");
+
+            }
+            else {
+                if (ResponsePost.status == 409) {
+                   alert("User name already exists") 
+                }
+                else {
+                    alert("One or more details is wrong");
+                }
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 }
 
@@ -57,14 +67,24 @@ const checkPassword = async () => {
         });
         const dataPost = await ResponsePost.json();
         if (!ResponsePost.ok) {
-            alert("enter password again")
+            alert("enter password")
         }
         else {
+            if (dataPost < 3) {
+                flag = false
+                alert("your password is too weak")
+            }
+            else {
+                flag = true
+            }
             meter.value = (dataPost / 10) * 2 + 0.2
             return dataPost
         }
     }
-    catch (Error) {
-        alert(`error ${Error}`)
+    catch (error) {
+        console.log(error)
     }
+}
+const goToProducts = () => {
+    window.location.href=("Products.html")
 }

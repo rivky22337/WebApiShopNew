@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     itemsCount.innerText = JSON.parse(localStorage.getItem(`${user.userId}_CartItems`)).length
 })
+const goToUserDetails = () => {
+    window.location.href("UserDetails.html")
+}
 
 const addProduct = (name, price, description, image) => {
 
@@ -52,7 +55,6 @@ const addCategory = (name,count) => {
 let url = "api/product"
 let flag = false
 const filterProducts =async () => {
-   // let url="api/product"
     const nameSearch = document.querySelector("#nameSearch").value
     const minPrice = document.querySelector("#minPrice").value
     const maxPrice = document.querySelector("#maxPrice").value
@@ -93,11 +95,8 @@ const ClearFilters = async () => {
 }
 const changeCategory = async(checkbox) => {
     const template = checkbox.closest('.cb');
-
     const categoryId = template.querySelector('.OptionName').name;
-
     if (checkbox.checked) {
-        //alert(category)
         if (!flag) {
             url += `?categoryIds=${categoryId}`
             flag = true
@@ -110,10 +109,10 @@ const changeCategory = async(checkbox) => {
         counter.innerText = products.length
     }
 }
+
 const PrintProducts = () => {
     productList.innerHTML=""
     products.forEach(product => {
-        console.log(product)
         addProduct(product.productName, product.price, product.description, product.imageUrl);
     });
 }

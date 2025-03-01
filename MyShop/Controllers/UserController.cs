@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Services;
-//using Entities;
 using Entities.Models;
 using System.Diagnostics.Metrics;
 using AutoMapper;
@@ -9,7 +8,6 @@ using DTO;
 using Microsoft.Identity.Client;
 
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyShop.Controllers
 {
@@ -53,17 +51,27 @@ namespace MyShop.Controllers
             User user = _mapper.Map<FullUserDTO, User>(userToAdd);
             //int passwordScore = _userService.CheckPassword(user.Password);
             User newUser = await _userService.AddUser(user);
-            ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(newUser);
-            if (usersDTO != null ) 
-            {
-                _logger.LogInformation($"UserController: created user {user.UserName}");
-                return CreatedAtAction(nameof(Get), new { id = user.UserId }, usersDTO);
-            }
-            else
+
+            if (newUser == null)
             {
                 _logger.LogError("userController: error creating user");
                 return BadRequest();
             }
+            else
+            {
+                ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(newUser);
+
+                if (usersDTO.UserName == null)
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    _logger.LogInformation($"UserController: created user {user.UserName}");
+                    return CreatedAtAction(nameof(Get), new { id = user.UserId }, usersDTO);
+                }
+            }
+
         }
 
         [HttpPost]
@@ -87,10 +95,10 @@ namespace MyShop.Controllers
             ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(user);
             if (usersDTO != null)
             {
-                _logger.LogInformation($"Login attemped with user {0} and password {1}", loginUser.UserName,loginUser.Password);
+                _logger.LogInformation($"Login attemped with user {loginUser.UserName} and password {loginUser.Password}");
                 return Ok(usersDTO);
             }
-            _logger.LogInformation($"Login failed with user {0} and password {1}", loginUser.UserName, loginUser.Password);
+            _logger.LogInformation($"Login failed with user {loginUser.UserName} and password {loginUser.Password}" );
             return BadRequest();
         }
 
@@ -102,20 +110,23 @@ namespace MyShop.Controllers
             u.UserId = id;
 
             User user = await _userService.UpdateUser(id, u);
-            ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(user);
-
-            if (usersDTO != null)
-            {
-                _logger.LogInformation($"userController: updating user {u.UserName}");
-                return Ok(usersDTO);
-            }
-            else
+            if (user == null)
             {
                 _logger.LogError($"userController: error updating user {u.UserName} ");
                 return BadRequest();
             }
+            else
+            {
+                ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(user);
+                if (usersDTO.UserName==null)
+                {
+                    return Conflict();
+                }
+                else{
+                    _logger.LogInformation($"userController: updating user {u.UserName}");
+                    return Ok(usersDTO);
+                }
+            }
         }
-
-
     }
 }

@@ -4,15 +4,20 @@ using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using AutoMapper;
+using Microsoft.Extensions.Logging;
+
 namespace Repositories
 
 {
     public class UserRepository : IUserRepository
     {
         MyShopContext _context;
-        public UserRepository(MyShopContext context)
+        ILogger<UserRepository> _logger;
+        public UserRepository(MyShopContext context,ILogger<UserRepository> logger)
         {
             _context = context; 
+            _logger = logger;
         }
         //public User GetUserById(int id)
         //{
@@ -33,9 +38,11 @@ namespace Repositories
         public async Task<User> AddUserAsync(User user)
         {
             User duplicate = await _context.Users.FirstOrDefaultAsync(u => u.UserName == user.UserName);
-            if (duplicate==null)
+            if (duplicate!=null)
             {
-                return null;
+                _logger.LogInformation("user repository: duplicate user");
+                user.UserName = null;
+                return user;
             }
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -54,10 +61,16 @@ namespace Repositories
 
         public async Task<User> UpdateUserAsync(int id, User userToUpdate)
         {
-
-            if(userToUpdate == null)
+            if (userToUpdate == null)
             {
                 return null;
+            }
+            User duplicate = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userToUpdate.UserName);
+            if (duplicate != null && duplicate.UserId!=userToUpdate.UserId)
+            {
+                _logger.LogInformation("user repository: duplicate user");
+                userToUpdate.UserName = null;
+                return userToUpdate;
             }
            _context.Update(userToUpdate);
             await _context.SaveChangesAsync();

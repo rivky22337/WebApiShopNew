@@ -1,11 +1,15 @@
 ﻿
 const meter = document.querySelector("#a")
+const registerContainer = document.querySelector("#registerContainer");
+const loginContainer = document.querySelector("#loginContainer");
+let flag = false;
+
 const register = () => {
-    const container = document.querySelector("#container");
-    container.style.visibility = "visible";
+    loginContainer.style.visibility = "hidden";
+    registerContainer.style.visibility = "visible";
 }
 
-const GetDataFromRegister = () => {
+const getDataFromRegister = () => {
     const userName = document.querySelector("#registerUserNameInput").value
     const password = document.querySelector("#registerPasswordInput").value
     const firstName = document.querySelector("#registerFirstNameInput").value
@@ -13,30 +17,40 @@ const GetDataFromRegister = () => {
 
     return ({ userName, password, firstName, lastName })
 }
-const CreateNewUser = async () => {
-    const newUser = GetDataFromRegister();
-    try {
-        const ResponsePost = await fetch('api/User', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newUser)
-        });
-        if (ResponsePost.status == 400) {
-            alert("One or more details is wrong");
-        }
-        if (ResponsePost.ok) {
-            alert("Created successfully");
-        } else {
-            alert("Bad request");
-        }
+const createNewUser = async () => {
+    if (!flag) {
+        alert("Enter password again")
     }
-    catch (Error) {
-        alert(Error)
+    else {
+        const newUser = getDataFromRegister();
+        try {
+            const responsePost = await fetch('api/User', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUser)
+            });
+            if (responsePost.ok) {
+                alert("Created successfully");
+                registerContainer.style.visibility = "hidden"
+                loginContainer.style.visibility = "visible"
+            }
+            else {
+                if (responsePost.status == 409) {
+                    alert("User name already exists")
+                }
+                else {
+                    alert("One or more details is wrong");
+                }
+            }
+        }
+        catch (error) {
+            console.error(error)
+        }
     }
 }
-const GetDataFromLogin = () => {
+const getDataFromLogin = () => {
     const userName = document.querySelector("#loginUserNameInput").value
     const password = document.querySelector("#loginPasswordInput").value
     return ({ userName, password })
@@ -45,17 +59,17 @@ const GetDataFromLogin = () => {
 
 
 
-const Login = async () => {
-    const details = GetDataFromLogin();
+const login = async () => {
+    const details = getDataFromLogin();
     try {
-        const ResponsePost = await fetch(`api/User/Login`, {
+        const responsePost = await fetch(`api/User/Login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(details)
         });
-        const dataPost = await ResponsePost.json();
+        const dataPost = await responsePost.json();
         if (dataPost.status == 400)
             alert("wrong details, please try again!")
         else {
@@ -63,9 +77,8 @@ const Login = async () => {
             window.location.href = "UserDetails.html";
         }
     }
-    catch (Error) {
-        alert(Error)
-    }
+    catch (error) {
+console.error(error)    }
 }
 
 const getPassword = () => {
@@ -76,23 +89,29 @@ const getPassword = () => {
 const checkPassword = async () => {
     const password = getPassword()
     try {
-        const ResponsePost = await fetch(`api/User/Password`, {
+        const responsePost = await fetch(`api/User/Password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(password)
         });
-        const dataPost = await ResponsePost.json();
-        if (!ResponsePost.ok) {
-            alert("try again")
+        if (!responsePost.ok) {
+            alert("Enter password")
         }
         else {
-            meter.value = (dataPost/10)*2+0.2
+            const dataPost = await responsePost.json();
+            if (dataPost<2) {
+                flag = false;
+            }
+            else {
+                flag = true;
+            }
+            meter.value = (dataPost / 10) * 2 + 0.2
             return dataPost
         }
     }
-    catch (Error) {
-        alert(`error ${Error}`)
+    catch (error) {
+        console.error(error)
     }
 }
