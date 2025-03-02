@@ -49,32 +49,62 @@ namespace Repositories
             return user;
         }
 
-        public User Login(LoginUserDTO loginUserDTO)
+        public async  Task<User> Login(string Password,string UserName)
         {
 
-            User user = _context.Users.FirstOrDefault(u =>  u.UserName == loginUserDTO.UserName && u.Password == loginUserDTO.Password );
+            User user = await _context.Users.FirstOrDefaultAsync(u =>  u.UserName == UserName && u.Password == Password );
            if(user == null) 
                 return null;
             return user;
 
         }
 
+        //public async Task<User> UpdateUserAsync(int id, User userToUpdate)
+        //{
+        //    if (userToUpdate == null)
+        //    {
+        //        return null;
+        //    }
+        //    User duplicate = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userToUpdate.UserName);
+        //    if (duplicate != null && duplicate.UserId!=userToUpdate.UserId)
+        //    {
+        //        _logger.LogInformation("user repository: duplicate user");
+        //        userToUpdate.UserName = null;
+        //        return userToUpdate;
+        //    }
+        //   _context.Update(userToUpdate);
+        //    await _context.SaveChangesAsync();
+        //    return userToUpdate;
+        //}
         public async Task<User> UpdateUserAsync(int id, User userToUpdate)
         {
             if (userToUpdate == null)
             {
                 return null;
             }
+
+            User existingUser = await _context.Users.FindAsync(id);
+            if (existingUser == null)
+            {
+                return null; 
+            }
+
             User duplicate = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userToUpdate.UserName);
-            if (duplicate != null && duplicate.UserId!=userToUpdate.UserId)
+            if (duplicate != null && duplicate.UserId != userToUpdate.UserId)
             {
                 _logger.LogInformation("user repository: duplicate user");
-                userToUpdate.UserName = null;
+                userToUpdate.UserName = null; 
                 return userToUpdate;
             }
-           _context.Update(userToUpdate);
+
+            existingUser.UserName = userToUpdate.UserName;
+           existingUser.FirstName = userToUpdate.FirstName;
+            existingUser.LastName = userToUpdate.LastName;
+            existingUser.Password = userToUpdate.Password;
+
+
             await _context.SaveChangesAsync();
-            return userToUpdate;
+            return existingUser;
         }
     }
 }

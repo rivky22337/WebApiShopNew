@@ -12,7 +12,7 @@ public partial class MyShopContext : DbContext
     {
     }
 
-    public MyShopContext(DbContextOptions<MyShopContext> options,IConfiguration configuration)
+    public MyShopContext(DbContextOptions<MyShopContext> options, IConfiguration configuration)
         : base(options)
     {
         _configuration = configuration;
@@ -33,7 +33,7 @@ public partial class MyShopContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer(_configuration.GetSection("DBContext_Connection")["Home"]);
+        => optionsBuilder.UseSqlServer(_configuration.GetSection("DBContext_Connection")["School"]);
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -99,7 +99,7 @@ public partial class MyShopContext : DbContext
             entity.Property(e => e.Price).HasColumnName("PRICE");
             entity.Property(e => e.ImageUrl).HasMaxLength(200)
             .HasColumnName("IMAGE_URL");
-       
+
             entity.Property(e => e.ProductName)
                 .HasMaxLength(50)
                 .HasColumnName("PRODUCT_NAME");

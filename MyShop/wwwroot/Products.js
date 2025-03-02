@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     itemsCount.innerText = JSON.parse(localStorage.getItem(`${user.userId}_CartItems`)).length
 })
 const goToUserDetails = () => {
-    window.location.href("UserDetails.html")
+    window.location.href = ("UserDetails.html")
 }
 
 const addProduct = (name, price, description, image) => {

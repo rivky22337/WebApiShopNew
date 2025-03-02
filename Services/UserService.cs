@@ -3,6 +3,7 @@ using Entities.Models;
 using System.Text.Json;
 using Zxcvbn;
 using DTO;
+using System.ComponentModel.DataAnnotations;
 
 namespace Services
 {
@@ -20,20 +21,9 @@ namespace Services
         //    return _userRepository.GetUserById(id);
         //}
 
-
-        public async Task<User> AddUser(User user)
+        public async Task<User> Login(string Password, string UserName)
         {
-            int passwordScore = CheckPassword(user.Password);
-            if (user.UserName == "" || user.FirstName == "" || user.LastName == ""|| passwordScore < 2)
-            {
-                return null;
-            }
-            return await _userRepository.AddUserAsync(user);
-        }
-
-        public User Login(LoginUserDTO loginUserDTO)
-        {
-            return _userRepository.Login(loginUserDTO);
+            return await _userRepository.Login(Password,UserName);
         }
 
         public async Task<User> UpdateUser(int id, User userToUpdate)
@@ -51,11 +41,63 @@ namespace Services
             if (password == null || password == "")
             {
                 return -1;
-            } 
+            }
             var result = Zxcvbn.Core.EvaluatePassword(password);
 
             return result.Score;
         }
+
+        //public async Task<User> AddUser(User user)
+        //{
+        //    int passwordScore = CheckPassword(user.Password);
+        //    try
+        //    {
+        //        ValidateUser(user, passwordScore);
+        //        return await _userRepository.AddUserAsync(user);
+        //    }
+        //    catch (ValidationException ex)
+        //    {
+        //        // Handle the validation exception and return appropriate message
+        //        throw new Exception($"User validation failed: {ex.Message}");
+        //    }
+        //}
+        public async Task<User> AddUser(User user)
+        {
+            int passwordScore = CheckPassword(user.Password);
+            if (user.UserName == "" || user.FirstName == "" || user.LastName == "" || passwordScore < 2)
+            {
+                return null;
+            }
+            return await _userRepository.AddUserAsync(user);
+        }
+
+        //private void ValidateUser(User user, int passwordScore)
+        //{
+        //    if (string.IsNullOrEmpty(user.UserName))
+        //    {
+        //        throw new ValidationException("Username is required");
+        //    }
+
+        //    if (string.IsNullOrEmpty(user.FirstName))
+        //    {
+        //        throw new ValidationException("First name is required");
+        //    }
+
+        //    if (string.IsNullOrEmpty(user.LastName))
+        //    {
+        //        throw new ValidationException("Last name is required");
+        //    }
+
+        //    if (passwordScore < 2)
+        //    {
+        //        throw new ValidationException("Password score is too low");
+        //    }
+
+        //    if (!IsValidEmail(user.Email))
+        //    {
+        //        throw new ValidationException("Invalid email address");
+        //    }
+        //}
     }
 }
 

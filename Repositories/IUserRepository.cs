@@ -8,7 +8,7 @@ namespace Repositories
     {
         Task<User> AddUserAsync(User user);
         //User GetUserById(int id);
-        User Login(LoginUserDTO loginUserDTO);
+        Task<User> Login(string Password,string UserName);
         Task<User> UpdateUserAsync(int id, User userToUpdate);
     }
 }

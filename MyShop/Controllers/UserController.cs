@@ -89,9 +89,9 @@ namespace MyShop.Controllers
         // POST api/<UserController>
         [HttpPost]
         [Route("Login")]
-        public ActionResult<User> Login([FromBody] LoginUserDTO loginUser )
+        public async Task<ActionResult<User>> Login([FromBody] LoginUserDTO loginUser )
         {
-            User user = _userService.Login(loginUser);
+            User user = await _userService.Login(loginUser);
             ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(user);
             if (usersDTO != null)
             {

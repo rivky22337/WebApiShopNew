@@ -8,7 +8,7 @@ namespace Services
         Task<User> AddUser(User user);
         int CheckPassword(string password);
         //User GetUserById(int id);
-        User Login(LoginUserDTO loginUserDTO);
+        Task<User> Login(string Password, string UserName);
         Task<User> UpdateUser(int id, User userToUpdate);
     }
 }
