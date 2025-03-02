@@ -28,8 +28,11 @@ namespace Repositories
            
             List<Product> products = await query.ToListAsync();
             return products;
-            // Console.WriteLine(query.ToQueryString());
-            //return await _context.Products.Include(p => p.Category).ToListAsync();
+
+        }
+        public async Task<Product> GetProductById(int id)
+        {
+            return await _context.Products.FirstOrDefaultAsync<Product>(p => p.ProductId == id);
         }
 
     }

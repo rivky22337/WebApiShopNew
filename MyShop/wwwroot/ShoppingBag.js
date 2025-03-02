@@ -63,9 +63,13 @@ const placeOrder = async () => {
             alert("One or more details is wrong");
         }
         if (ResponsePost.ok) {
-            alert("Created successfully");
-            localStorage.setItem(`${user.userId}_CartItems`, JSON.stringify([]) )
-            window.location.reload()
+            const responseData = await ResponsePost.json();
+            alert(`Order ${responseData.orderId} created successfully`);
+
+            localStorage.setItem(`${user.userId}_CartItems`, JSON.stringify([]));
+            itemsList.innerHTML = "";
+            totalAmount.textContent = 0;
+            itemCount.textContent = 0;
         } else {
             alert("Bad request");
         }

@@ -91,7 +91,7 @@ namespace MyShop.Controllers
         [Route("Login")]
         public async Task<ActionResult<User>> Login([FromBody] LoginUserDTO loginUser )
         {
-            User user = await _userService.Login(loginUser);
+            User user = await _userService.Login(loginUser.Password,loginUser.UserName);
             ReturnUserDTO usersDTO = _mapper.Map<User, ReturnUserDTO>(user);
             if (usersDTO != null)
             {

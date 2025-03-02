@@ -16,7 +16,6 @@ namespace TestProject
     public class UserRepositoryUnitTesting
     {
 
-
         [Fact]
         public async Task LoginTest()
         {
@@ -28,8 +27,7 @@ namespace TestProject
 
             var userRepository = new UserRepository(mockContext.Object, logger.Object);
 
-            LoginUserDTO userDto = new LoginUserDTO(user.Password,user.UserName); 
-            var result = await userRepository.Login(userDto);
+            var result = await userRepository.Login(user.Password, user.UserName);
 
             Assert.Equal(user, result);
         }
