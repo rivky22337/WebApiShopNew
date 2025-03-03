@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace TestProject
 {
+
     public class UserRepositoryIntegrationTest
     {
         private readonly DataBaseFixture _DBFixture;
@@ -18,7 +19,6 @@ namespace TestProject
         public UserRepositoryIntegrationTest()
         {
             _DBFixture = new DataBaseFixture();
-
         }
 
         [Fact]
@@ -29,14 +29,14 @@ namespace TestProject
 
             var repository = new UserRepository(_DBFixture.Context,logger);
 
-            var user = new User { FirstName = "aa", LastName = "bb", UserName = "Chana@123cvv", Password = "Rzfdsxf!@2" };
+            var user = new User { FirstName = "aa", LastName = "bb", UserName = "Chana@new", Password = "Rzfdsxf!@2" };
             var DbUser = await repository.AddUserAsync(user);
 
             // Assert
             Assert.NotNull(DbUser);
             Assert.NotEqual(0, DbUser.UserId);
-            Assert.Equal("Chana@123cvv", DbUser.UserName);
-            _DBFixture.Dispose();
+            Assert.Equal("Chana@new", DbUser.UserName);
+           // _DBFixture.Dispose();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿const title = document.querySelector("#title")
 const meter = document.querySelector("#meter")
-const user = JSON.parse(localStorage.getItem('currentUser'))
+const user = JSON.parse(localStorage.getItem('currentUser')) || {}
 title.textContent = `hello ${user.userName}`
 let flag = false;
 
@@ -31,15 +31,20 @@ const UpdateUser = async () => {
                 },
                 body: JSON.stringify(UpdatedUser)
             });
+            const responseData = await ResponsePut.json();
+
             if (ResponsePut.ok) {
                 alert("Updated successfully");
-
-            }
-            else {
-                if (ResponsePost.status == 409) {
-                   alert("User name already exists") 
+            } else {
+                if (ResponsePut.status === 409) {
+                    alert("User name already exists");
                 }
-                else {
+                if (responseData.errors) {
+                    const errorMessages = Object.entries(responseData.errors)
+                        .map(([field, messages]) => `${field}: ${messages.join(", ")}`)
+                        .join("\n");
+                    alert(errorMessages);
+                } else {
                     alert("One or more details is wrong");
                 }
             }

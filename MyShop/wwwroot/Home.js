@@ -31,18 +31,23 @@ const createNewUser = async () => {
                 },
                 body: JSON.stringify(newUser)
             });
-            if (responsePost.ok) {
-                alert("Created successfully");
-                registerContainer.style.visibility = "hidden"
-                loginContainer.style.visibility = "visible"
-            }
-            else {
-                if (responsePost.status == 409) {
-                    alert("User name already exists")
+            const responseData = await ResponsePut.json();
+
+            if (ResponsePost.ok) {
+                alert("Updated successfully");
+            } else {
+                if (ResponsePost.status === 409) {
+                    alert("User name already exists");
                 }
-                else {
+                if (responseData.errors) {
+                    const errorMessages = Object.entries(responseData.errors)
+                        .map(([field, messages]) => `${field}: ${messages.join(", ")}`)
+                        .join("\n");
+                    alert(errorMessages);
+                } else {
                     alert("One or more details is wrong");
                 }
+            }  }
             }
         }
         catch (error) {

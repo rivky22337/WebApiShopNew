@@ -15,15 +15,15 @@ namespace Services
 
         IOrderRepository _orderRepository;
         IProductRepository _productRepository;
-        // ILogger<OrderService> _logger;
+         ILogger<OrderService> _logger;
 
-       // public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, ILogger<OrderService> logger)
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, ILogger<OrderService> logger)
 
-        public OrderService(IOrderRepository orderRepository,IProductRepository productRepository)
+       // public OrderService(IOrderRepository orderRepository,IProductRepository productRepository)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
-           // _logger = logger;
+            _logger = logger;
         }
         public async Task<GetOrderDTO> GetOrderByIdAsync(int id)
         {
@@ -35,7 +35,7 @@ namespace Services
             if (realSum!=order.OrderSum)
             {
                    order.OrderSum = realSum;
-                // _logger.LogWarning($"user {order.UserId} tried to change order {order.OrderId} sum");
+                 _logger.LogWarning($"user {order.UserId} tried to change order {order.OrderId} sum");
             }
             return await _orderRepository.AddOrderAsync(order);
         }

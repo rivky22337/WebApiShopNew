@@ -12,10 +12,12 @@ namespace TestProject
     public class DataBaseFixture
     {
         public MyShopContext Context { get;private set; }
-        public IConfiguration configuration { get; set; }
         public DataBaseFixture()
         {
-            //configuration = cofig;
+            var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+
             var options = new DbContextOptionsBuilder<MyShopContext>()
                 .UseSqlServer("Server=DESKTOP-QKU0HL3;Database=ManageShop;Trusted_Connection=True;TrustServerCertificate=True")
                 .Options;

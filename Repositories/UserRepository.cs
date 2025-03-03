@@ -59,23 +59,6 @@ namespace Repositories
 
         }
 
-        //public async Task<User> UpdateUserAsync(int id, User userToUpdate)
-        //{
-        //    if (userToUpdate == null)
-        //    {
-        //        return null;
-        //    }
-        //    User duplicate = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userToUpdate.UserName);
-        //    if (duplicate != null && duplicate.UserId!=userToUpdate.UserId)
-        //    {
-        //        _logger.LogInformation("user repository: duplicate user");
-        //        userToUpdate.UserName = null;
-        //        return userToUpdate;
-        //    }
-        //   _context.Update(userToUpdate);
-        //    await _context.SaveChangesAsync();
-        //    return userToUpdate;
-        //}
         public async Task<User> UpdateUserAsync(int id, User userToUpdate)
         {
             if (userToUpdate == null)
