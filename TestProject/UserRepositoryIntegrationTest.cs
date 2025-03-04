@@ -36,7 +36,7 @@ namespace TestProject
             Assert.NotNull(DbUser);
             Assert.NotEqual(0, DbUser.UserId);
             Assert.Equal("Chana@new", DbUser.UserName);
-           // _DBFixture.Dispose();
+            _DBFixture.Dispose();
         }
     }
 }

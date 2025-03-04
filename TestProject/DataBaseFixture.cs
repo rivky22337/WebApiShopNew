@@ -1,27 +1,22 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Repositories;
 
 namespace TestProject
 {
-    public class DataBaseFixture
+    public class DataBaseFixture : IDisposable
     {
-        public MyShopContext Context { get;private set; }
+        public MyShopContext Context { get; private set; }
+        //IConfiguration configuration;
         public DataBaseFixture()
         {
-            var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-
             var options = new DbContextOptionsBuilder<MyShopContext>()
-                .UseSqlServer("Server=DESKTOP-QKU0HL3;Database=ManageShop;Trusted_Connection=True;TrustServerCertificate=True")
+                .UseSqlServer("Server=SRV2\\PUPILS;Database=Test_MyShop_214919813;TrustServerCertificate=True;Trusted_Connection=True")
                 .Options;
-            Context = new MyShopContext(options, configuration);
+            Context = new MyShopContext(options);
+            //Context.Database.EnsureDeleted();
             Context.Database.EnsureCreated();
         }
 

@@ -32,18 +32,6 @@ namespace MyShop.Controllers
         {
             return new string[] { "value1", "value2" };
         }
-        // GET api/<UserController>/5
-        //[HttpGet("{id}")]
-        //public ActionResult<User> GetUserById(int id)
-        //{
-        //    User result = _userService.GetUserById(id);
-        //    if (result.UserId != null)
-        //    {
-        //        return Ok(_userService.GetUserById(id));
-        //    }
-        //    return BadRequest();
-        //}
-
         // POST api/<UserController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FullUserDTO userToAdd)
