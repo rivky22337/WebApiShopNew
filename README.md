@@ -12,7 +12,7 @@ Our project is organized into several layers to promote separation of concerns a
 
 - **DTO (Data Transfer Objects) Layer**: This layer contains records that represent the data structures used for communication between the client and the server. It ensures that only required data is exposed and transferred.
   - **Why use records in DTO?**: Using records in DTOs offers several advantages. Records provide a concise and immutable way to define data structures, reducing boilerplate code and preventing accidental modifications. They also support value equality, which is useful for comparing DTOs.
-- **Service Layer**: Contains business logic and handles the core functionality of the application. It processes data received from the DTO layer and interacts with the Repository layer.
+- **Service Layer**: Contains business logic and handles the core functionality of the application. It processes data received from the Controller layer and interacts with the Repository layer.
 - **Repository Layer**: Responsible for data access and persistence. It communicates with the database and performs CRUD operations.
 - **Controller Layer**: The entry point for API requests. It receives HTTP requests, invokes the appropriate service methods, and returns HTTP responses.
 - **Entities Layer**: Contains the entity classes that represent the data model of the application. These classes are used by the Repository layer to interact with the database.
