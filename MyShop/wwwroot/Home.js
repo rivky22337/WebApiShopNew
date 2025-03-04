@@ -60,10 +60,6 @@ const getDataFromLogin = () => {
     const password = document.querySelector("#loginPasswordInput").value
     return ({ userName, password })
 }
-
-
-
-
 const login = async () => {
     const details = getDataFromLogin();
     try {
@@ -83,7 +79,8 @@ const login = async () => {
         }
     }
     catch (error) {
-console.error(error)    }
+        console.error(error)
+    }
 }
 
 const getPassword = () => {

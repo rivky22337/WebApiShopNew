@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NLog.Web;
 using Repositories;
 using Services;
 using Entities;
-using Entities.Models;
-using NLog.Web;
 using MyShop.middleWares;
-//using Microsoft.Extensions.Configuration;
+using Entities.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddMemoryCache(); // Add MemoryCache service
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
