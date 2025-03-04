@@ -32,7 +32,7 @@ namespace IntegrationTests
             if (!_context.Products.Any())
             {
                 var categories = _context.Categories.ToList();
-                _context.Products.AddRange( 
+                _context.Products.AddRange(
                     new Product { ProductName = "Product1", Price = 100, CategoryId = categories[0].CategoryId },
                     new Product { ProductName = "Product2", Price = 200, CategoryId = categories[1].CategoryId },
                     new Product { ProductName = "Product3", Price = 300, CategoryId = categories[0].CategoryId }

@@ -37,7 +37,6 @@ namespace MyShop.Controllers
         public async Task<IActionResult> Post([FromBody] FullUserDTO userToAdd)
         {
             User user = _mapper.Map<FullUserDTO, User>(userToAdd);
-            //int passwordScore = _userService.CheckPassword(user.Password);
             User newUser = await _userService.AddUser(user);
 
             if (newUser == null)

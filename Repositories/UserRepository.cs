@@ -19,21 +19,6 @@ namespace Repositories
             _context = context; 
             _logger = logger;
         }
-        //public User GetUserById(int id)
-        //{
-        //    using (StreamReader reader = System.IO.File.OpenText(filePath))
-        //    {
-        //        string? currentUserInFile;
-        //        while ((currentUserInFile = reader.ReadLine()) != null)
-        //        {
-        //            User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-        //            if (user.UserId == id)
-        //                return user;
-        //        }
-        //    }
-        //    return null;
-        //}
-
 
         public async Task<User> AddUserAsync(User user)
         {

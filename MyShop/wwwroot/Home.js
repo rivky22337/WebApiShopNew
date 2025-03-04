@@ -1,4 +1,5 @@
-﻿const meter = document.querySelector("#a");
+﻿
+const meter = document.querySelector("#a")
 const registerContainer = document.querySelector("#registerContainer");
 const loginContainer = document.querySelector("#loginContainer");
 let flag = false;
@@ -9,18 +10,18 @@ const register = () => {
 }
 
 const getDataFromRegister = () => {
-    const userName = document.querySelector("#registerUserNameInput").value;
-    const password = document.querySelector("#registerPasswordInput").value;
-    const firstName = document.querySelector("#registerFirstNameInput").value;
-    const lastName = document.querySelector("#registerLastNameInput").value;
+    const userName = document.querySelector("#registerUserNameInput").value
+    const password = document.querySelector("#registerPasswordInput").value
+    const firstName = document.querySelector("#registerFirstNameInput").value
+    const lastName = document.querySelector("#registerLastNameInput").value
 
-    return { userName, password, firstName, lastName };
+    return ({ userName, password, firstName, lastName })
 }
-
 const createNewUser = async () => {
     if (!flag) {
-        alert("Enter password again");
-    } else {
+        alert("Enter password again")
+    }
+    else {
         const newUser = getDataFromRegister();
         try {
             const responsePost = await fetch('api/User', {
@@ -33,8 +34,9 @@ const createNewUser = async () => {
             const responseData = await responsePost.json();
 
             if (responsePost.ok) {
-                alert("Updated successfully");
-            } else {
+                alert(`user ${responseData.userId} created successfully` );
+            }
+            else {
                 if (responsePost.status === 409) {
                     alert("User name already exists");
                 }
@@ -46,23 +48,27 @@ const createNewUser = async () => {
                 } else {
                     alert("One or more details is wrong");
                 }
-            }
-        } catch (error) {
-            console.error(error);
+            }  
+            
+        }
+        catch (error) {
+            console.error(error)
         }
     }
 }
-
 const getDataFromLogin = () => {
-    const userName = document.querySelector("#loginUserNameInput").value;
-    const password = document.querySelector("#loginPasswordInput").value;
-    return { userName, password };
+    const userName = document.querySelector("#loginUserNameInput").value
+    const password = document.querySelector("#loginPasswordInput").value
+    return ({ userName, password })
 }
+
+
+
 
 const login = async () => {
     const details = getDataFromLogin();
     try {
-        const responsePost = await fetch('api/User/Login', {
+        const responsePost = await fetch(`api/User/Login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -70,41 +76,48 @@ const login = async () => {
             body: JSON.stringify(details)
         });
         const dataPost = await responsePost.json();
-        if (responsePost.status === 400) {
-            alert("Wrong details, please try again!");
-        } else {
-            localStorage.setItem("currentUser", JSON.stringify(dataPost));
+        if (dataPost.status == 400)
+            alert("wrong details, please try again!")
+        else {
+            localStorage.setItem("currentUser", JSON.stringify(dataPost))
             window.location.href = "UserDetails.html";
         }
-    } catch (error) {
-        console.error(error);
     }
+    catch (error) {
+console.error(error)    }
 }
 
 const getPassword = () => {
-    const password = document.querySelector("#registerPasswordInput").value;
-    return password;
+    const password = document.querySelector("#registerPasswordInput").value
+    return ( password )
 }
 
 const checkPassword = async () => {
-    const password = getPassword();
+    const password = getPassword()
     try {
-        const responsePost = await fetch('api/User/Password', {
+        const responsePost = await fetch(`api/User/Password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ password }) // Send password as an object
+            body: JSON.stringify(password)
         });
         if (!responsePost.ok) {
-            alert("Enter password");
-        } else {
-            const dataPost = await responsePost.json();
-            flag = dataPost >= 2;
-            meter.value = (dataPost / 10) * 2 + 0.2;
-            return dataPost;
+            alert("Enter password")
         }
-    } catch (error) {
-        console.error(error);
+        else {
+            const dataPost = await responsePost.json();
+            if (dataPost<2) {
+                flag = false;
+            }
+            else {
+                flag = true;
+            }
+            meter.value = (dataPost / 10) * 2 + 0.2
+            return dataPost
+        }
+    }
+    catch (error) {
+        console.error(error)
     }
 }
