@@ -38,6 +38,5 @@ namespace TestProject
             Assert.Equal("Chana@new", DbUser.UserName);
            // _DBFixture.Dispose();
         }
-
     }
 }
